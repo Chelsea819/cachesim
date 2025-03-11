@@ -24,6 +24,21 @@ uint32_t string_to_uint(const char * str){
   return num;
 }
 
+const char* get_algorithm_name(int var) {
+    switch (var) {
+        case LRU_ARITHEME:
+            return "LRU_ARITHEME";
+        case LIKE_LRU_ARITHEME:
+            return "LIKE_LRU_ARITHEME";
+        case RANDOM_ARITHEME:
+            return "RANDOM_ARITHEME";
+        case NON_ARITHEME:
+            return "NON_ARITHEME";
+        default:
+            return "UNKNOWN";
+    }
+}
+
 void open_log(){
   Assert(log_file, "Log file is NULL!");
   log_fp = fopen(log_file, "r+");
@@ -62,6 +77,8 @@ static int parse_args(int argc, char *argv[]) {
 }
 
 
+
+
 int main(int argc, char *argv[]){
     // 命令行参数处理
     parse_args(argc,argv);
@@ -73,7 +90,7 @@ int main(int argc, char *argv[]){
     open_log();
 
     // 不同cache配置，最外层循环
-    printf("Cache\tset_num\tway_num\tcache_line\tcache_size\thit_percent\t\n");
+    printf("Cache\tset_num\tway_num\tcache_line\tcache_size\treplace-arithemetic\thit_percent\t\n");
     int index = 0;
     Cache * cache_con = cache_ptr;
     while(cache_con != NULL){
@@ -87,7 +104,7 @@ int main(int argc, char *argv[]){
         cache_func(cache_con, pc);
       }
       cache_con->log->hit_percent = (float)cache_con->log->hit_time / cache_con->log->total_time * 100;
-      printf("%d\t%ld\t%ld\t%ld\t%ldB\t%f%%\n", index++, cache_con->config->cache_set, cache_con->config->cache_way, cache_con->config->cache_line, cache_con->config->cache_line*cache_con->config->cache_way*cache_con->config->cache_set, cache_con->log->hit_percent);
+      printf("%d\t%ld\t%ld\t%ld\t\t%ldB\t\t%s\t\t%f%%\n", index++, cache_con->config->cache_set, cache_con->config->cache_way, cache_con->config->cache_line, cache_con->config->cache_line*cache_con->config->cache_way*cache_con->config->cache_set, get_algorithm_name(cache_con->config->arithem_idx), cache_con->log->hit_percent);
       cache_con = cache_con->next;
     }
 
