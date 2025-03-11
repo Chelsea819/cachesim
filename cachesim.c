@@ -27,13 +27,13 @@ uint32_t string_to_uint(const char * str){
 const char* get_algorithm_name(int var) {
     switch (var) {
         case LRU_ARITHEME:
-            return "LRU_ARITHEME";
+            return "LRU";
         case LIKE_LRU_ARITHEME:
-            return "LIKE_LRU_ARITHEME";
+            return "LIKE_LRU";
         case RANDOM_ARITHEME:
-            return "RANDOM_ARITHEME";
+            return "RANDOM";
         case NON_ARITHEME:
-            return "NON_ARITHEME";
+            return "NONE";
         default:
             return "UNKNOWN";
     }
@@ -90,7 +90,7 @@ int main(int argc, char *argv[]){
     open_log();
 
     // 不同cache配置，最外层循环
-    printf("Cache\tset_num\tway_num\tcache_line\tcache_size\treplace-arithemetic\thit_percent\t\n");
+    printf("Cache\tset_num\tway_num\tcache_line\tcache_size\treplace-arithem\thit_percent\t\n");
     int index = 0;
     Cache * cache_con = cache_ptr;
     while(cache_con != NULL){
