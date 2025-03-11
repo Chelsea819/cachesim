@@ -12,7 +12,7 @@ static char *log_file = NULL;
 bool batch_flag = false;
 
 Cache *cache_ptr;
-Cache cache_batch[DEFAUT_CACHE_NUM];
+Cache cache_batch[DEFAUT_CACHE_MAX_NUM];
 Cache cache_spec;
 
 uint32_t string_to_uint(const char * str){

@@ -18,7 +18,8 @@
 #define BITS(x, hi, lo) (((x) >> (lo)) & BITMASK((hi) - (lo) + 1)) // similar to x[hi:lo] in verilog
 #define CACHE_SIZE 128
 #define READ_FILE_BUFFER 16
-#define DEFAUT_CACHE_NUM 5
+#define DEFAUT_CACHE_MAX_NUM 10
+
 
 #define LRU_ARITHEME      1
 #define LIKE_LRU_ARITHEME 2

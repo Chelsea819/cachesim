@@ -5,7 +5,7 @@ extern size_t cache_set;
 extern size_t cache_way;
 extern size_t cache_line;
 extern bool batch_flag;
-extern Cache cache_batch[DEFAUT_CACHE_NUM];
+extern Cache cache_batch[DEFAUT_CACHE_MAX_NUM];
 extern Cache *cache_ptr;
 extern Cache cache_spec;
 
@@ -127,25 +127,30 @@ void cache_area_init(Cache * cache){
 
   cache->area->cache_sets = sets;
 }
-
+uint32_t default_cache_num = 0;
 void cache_init(){
   // default batch cache flag test
   // Cache_config *config = NULL;
   if(batch_flag){
-    for(int i = 0; i < DEFAUT_CACHE_NUM; i ++){
+    for(int i = 0; i < DEFAUT_CACHE_MAX_NUM; i ++){
       cache_batch[i].config = (Cache_config *)malloc(sizeof(Cache_config));
     }
-    *(cache_batch[0].config) = (Cache_config){16,2,16, LRU_ARITHEME};
-    *(cache_batch[1].config) = (Cache_config){32,1,8, LRU_ARITHEME};
-    *(cache_batch[2].config) = (Cache_config){64,1,4, NON_ARITHEME};
-    *(cache_batch[3].config) = (Cache_config){16,1,8, NON_ARITHEME};
-    *(cache_batch[4].config) = (Cache_config){32,1,8, LRU_ARITHEME};
-    // *(cache_batch[5].config) = (Cache_config);
-    for(int i = 0; i < DEFAUT_CACHE_NUM; i ++){
+    int idx = 0;
+    *(cache_batch[idx++].config) = (Cache_config){16,2,16, LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){16,2,16, LIKE_LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){16,4,16, LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){16,4,16, LIKE_LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){32,1,8, LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){64,1,4, NON_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){16,1,8, NON_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){32,1,8, LRU_ARITHEME};
+
+    default_cache_num = idx;
+    for(int i = 0; i < default_cache_num; i ++){
       cache_area_init(&cache_batch[i]);
       cache_tag_arithem_init(&cache_batch[i]);
       cache_batch[i].log = (Report *)malloc(sizeof(Report));
-      if(i < DEFAUT_CACHE_NUM-1)
+      if(i < default_cache_num-1)
         cache_batch[i].next = &cache_batch[i+1];
       else 
         cache_batch[i].next = NULL;
