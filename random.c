@@ -3,7 +3,6 @@
 
 uint32_t random_num(uint32_t way_num) {
     // 使用当前时间作为随机数生成器的种子
-    srand((unsigned int)time(NULL));
 
     // 生成一个特定范围内的随机数
     int random_number_in_range = rand() % way_num; // 取模运算得到0到way_num的随机数

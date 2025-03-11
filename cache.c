@@ -138,16 +138,12 @@ void cache_init(){
       cache_batch[i].config = (Cache_config *)malloc(sizeof(Cache_config));
     }
     int idx = 0;
-    *(cache_batch[idx++].config) = (Cache_config){256,2,16, LRU_ARITHEME};
-    *(cache_batch[idx++].config) = (Cache_config){256,2,16, LIKE_LRU_ARITHEME};
-    *(cache_batch[idx++].config) = (Cache_config){256,2,16, RANDOM_ARITHEME};
-    *(cache_batch[idx++].config) = (Cache_config){256,1,16, NON_ARITHEME};
-    *(cache_batch[idx++].config) = (Cache_config){16,4,16, LIKE_LRU_ARITHEME};
-    *(cache_batch[idx++].config) = (Cache_config){16,4,16, RANDOM_ARITHEME};
-    *(cache_batch[idx++].config) = (Cache_config){32,1,8, LRU_ARITHEME};
-    *(cache_batch[idx++].config) = (Cache_config){64,1,4, NON_ARITHEME};
-    *(cache_batch[idx++].config) = (Cache_config){16,1,8, NON_ARITHEME};
-    *(cache_batch[idx++].config) = (Cache_config){32,1,8, LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){4,2,16, LIKE_LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){4,2,16, RANDOM_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){8,1,16, NON_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){4,4,8, LIKE_LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){4,4,8, RANDOM_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){8,1,16, NON_ARITHEME};
 
     default_cache_num = idx;
     for(int i = 0; i < default_cache_num; i ++){

@@ -1,5 +1,5 @@
 #include "common.h"
-
+#include <time.h>
 void cache_func(Cache *cache_ptr, uint32_t pc);
 void cache_init();
 void cache_destroy();
@@ -80,6 +80,7 @@ static int parse_args(int argc, char *argv[]) {
 
 
 int main(int argc, char *argv[]){
+    srand((unsigned int)time(NULL));
     // 命令行参数处理
     parse_args(argc,argv);
 
