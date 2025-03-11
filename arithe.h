@@ -13,4 +13,9 @@ void cache_tag_lru_arithem_init(Cache * cache);
 uint32_t lru_arithem(Cache_way* cache_way, uint32_t way_num);
 void lru_arithem_update(Cache_way* cache_way, uint32_t way_addr, uint32_t way_num);
 
+// random
+uint32_t random_arithem(uint32_t way_num);
+void random_arithem_update();
+void cache_tag_random_arithem_init();
+
 #endif // HEADER_FILE_ARITHE_H

@@ -22,7 +22,7 @@ uint32_t choose_eliminate(Cache* cache, uint32_t way_num, uint32_t addr_set){
 
   case RANDOM_ARITHEME:
     /* code */
-    break;
+    return random_arithem(way_num);
   default:
     break;
   }
@@ -43,6 +43,7 @@ void update_tag(Cache* cache, uint32_t set_addr, uint32_t way_addr, uint32_t way
     break;
   case RANDOM_ARITHEME:
     /* code */
+    random_arithem_update();
     break;
   default:
     break;
@@ -106,6 +107,7 @@ void cache_tag_arithem_init(Cache * cache){
     break;
   case RANDOM_ARITHEME:
     /* code */
+    cache_tag_random_arithem_init();
     break;
   default:
     break;
@@ -138,8 +140,10 @@ void cache_init(){
     int idx = 0;
     *(cache_batch[idx++].config) = (Cache_config){16,2,16, LRU_ARITHEME};
     *(cache_batch[idx++].config) = (Cache_config){16,2,16, LIKE_LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){16,2,16, RANDOM_ARITHEME};
     *(cache_batch[idx++].config) = (Cache_config){16,4,16, LRU_ARITHEME};
     *(cache_batch[idx++].config) = (Cache_config){16,4,16, LIKE_LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){16,4,16, RANDOM_ARITHEME};
     *(cache_batch[idx++].config) = (Cache_config){32,1,8, LRU_ARITHEME};
     *(cache_batch[idx++].config) = (Cache_config){64,1,4, NON_ARITHEME};
     *(cache_batch[idx++].config) = (Cache_config){16,1,8, NON_ARITHEME};
