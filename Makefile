@@ -27,6 +27,7 @@ LOG ?= $(WORK_DIR)/nemu-log.txt
 mainargs ?= -b
 ARGS = -f $(LOG) $(mainargs)
 NEMU_EXEC := $(BINARY) $(ARGS)
+
 run: $(BINARY)
 	@echo "Running cache simulator..."
 	@$(BINARY) $(ARGS)
