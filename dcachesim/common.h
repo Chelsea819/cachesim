@@ -18,7 +18,7 @@
 #define BITS(x, hi, lo) (((x) >> (lo)) & BITMASK((hi) - (lo) + 1)) // similar to x[hi:lo] in verilog
 #define CACHE_SIZE 128
 #define READ_FILE_BUFFER 16
-#define DEFAUT_CACHE_MAX_NUM 15
+#define DEFAUT_CACHE_MAX_NUM 20
 
 
 #define LRU_ARITHEME      1
@@ -42,6 +42,8 @@ typedef struct cache_way{
 
 typedef struct cache_set{
   Cache_way* cache_ways;
+  uint32_t * lru_array_2;
+  uint32_t ** lru_array_4;
 }Cache_set;
 
 typedef struct cache_area{

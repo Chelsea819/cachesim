@@ -18,7 +18,7 @@ uint32_t choose_eliminate(Cache* cache, uint32_t way_num, uint32_t addr_set){
     return lru_arithem(cache_way, way_num);
   case LIKE_LRU_ARITHEME:
     /* code */
-    return like_lru_arithem(addr_set, way_num);
+    return like_lru_arithem(cache, addr_set, way_num);
 
   case RANDOM_ARITHEME:
     /* code */
@@ -39,7 +39,7 @@ void update_tag(Cache* cache, uint32_t set_addr, uint32_t way_addr, uint32_t way
     break;
   case LIKE_LRU_ARITHEME:
     /* code */
-    like_lru_arithem_update(set_addr, way_addr, way_num);
+    like_lru_arithem_update(cache, set_addr, way_addr, way_num);
     break;
   case RANDOM_ARITHEME:
     /* code */
@@ -54,7 +54,7 @@ void update_tag(Cache* cache, uint32_t set_addr, uint32_t way_addr, uint32_t way
 uint32_t load_miss_to_cache(Cache *cache_ptr, uint32_t addr_set, uint32_t addr_index){
   // choose a worst way to store data
   uint32_t way_addr = choose_eliminate(cache_ptr, cache_ptr->config->cache_way, addr_set);
-
+  
   // load data
   cache_ptr->area->cache_sets[addr_set].cache_ways[way_addr].tag = addr_index;
   return way_addr;
@@ -81,13 +81,10 @@ void cache_func(Cache *cache_ptr, uint32_t pc){
   // hit
   if(hit_flag){
     cache_ptr->log->hit_time ++;
-    // update hit data
-    // update_hit(cache_sets[addr_set].cache_ways, hit_way_addr, cache_ptr->config->cache_way);
 
   } 
   // miss
   else{
-    // if miss, load
     way_addr = load_miss_to_cache(cache_ptr, addr_set, addr_index);
   }
   update_tag(cache_ptr, addr_set, way_addr, cache_ptr->config->cache_way);
@@ -138,10 +135,23 @@ void cache_init(){
       cache_batch[i].config = (Cache_config *)malloc(sizeof(Cache_config));
     }
     int idx = 0;
-    *(cache_batch[idx++].config) = (Cache_config){16,1,4, NON_ARITHEME};
-    *(cache_batch[idx++].config) = (Cache_config){32,1,4, NON_ARITHEME};
-    *(cache_batch[idx++].config) = (Cache_config){16,1,8, NON_ARITHEME};
-    *(cache_batch[idx++].config) = (Cache_config){8,1,16, NON_ARITHEME};
+    // *(cache_batch[idx++].config) = (Cache_config){4,2,32, LIKE_LRU_ARITHEME};
+    // *(cache_batch[idx++].config) = (Cache_config){8,2,16, LIKE_LRU_ARITHEME};
+    // *(cache_batch[idx++].config) = (Cache_config){16,2,8, LIKE_LRU_ARITHEME};
+    // *(cache_batch[idx++].config) = (Cache_config){32,2,4, LIKE_LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){2,4,32, LIKE_LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){4,4,16, LIKE_LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){8,4,8, LIKE_LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){16,4,4, LIKE_LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){4,2,64, LIKE_LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){8,2,32, LIKE_LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){16,2,16, LIKE_LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){32,2,8, LIKE_LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){64,2,4, LIKE_LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){8,4,16, LIKE_LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){16,4,8, LIKE_LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){32,4,4, LIKE_LRU_ARITHEME};
+    *(cache_batch[idx++].config) = (Cache_config){32,4,8, LIKE_LRU_ARITHEME};
 
     default_cache_num = idx;
     for(int i = 0; i < default_cache_num; i ++){

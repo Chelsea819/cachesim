@@ -23,7 +23,7 @@ $(BINARY): $(OBJS)
 	@echo + LD $@
 	@gcc -o $@ $(OBJS) -lm
 
-LOG ?= $(WORK_DIR)/nemu-log.txt
+LOG ?= $(WORK_DIR)/mtrace_simple.log
 mainargs ?= -b
 ARGS = -f $(LOG) $(mainargs)
 NEMU_EXEC := $(BINARY) $(ARGS)

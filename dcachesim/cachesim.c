@@ -1,5 +1,6 @@
 #include "common.h"
 #include <time.h>
+#include <string.h>
 void cache_func(Cache *cache_ptr, uint32_t pc);
 void cache_init();
 void cache_destroy();
@@ -14,13 +15,15 @@ bool batch_flag = false;
 Cache *cache_ptr;
 Cache cache_batch[DEFAUT_CACHE_MAX_NUM];
 Cache cache_spec;
-
+ 
 uint32_t string_to_uint(const char * str){
+  // printf("string: [%s]\n", str);
   char *endPtr; // 用于检查转换是否成功
   errno = 0;  // 清除errno 以检查错误
   uint32_t num = (uint32_t)strtoul(str, &endPtr, 16);
+  // printf("num: [%d]\n", num);
   //check if translate successfully
-  Assert(errno != 0 || *endPtr != '\0', "Conversion failed");
+  // Assert(errno != 0 || *endPtr != '\0', "Conversion failed");
   return num;
 }
 
@@ -101,8 +104,21 @@ int main(int argc, char *argv[]){
       fseek(log_fp, 0, SEEK_SET); // 移动到文件开头
       while(fgets(buffer, sizeof(buffer), log_fp)){
         cache_con->log->total_time ++;
-        uint32_t pc = string_to_uint(&buffer[2]);
-        cache_func(cache_con, pc);
+        // 解析操作类型和地址
+        char *colon = strstr(buffer, ":"); // 查找中文冒号
+        if (!colon) continue; // 无效行
+        // 分割操作类型和地址
+        *colon = '\0'; // 分割字符串
+        // char *op = buffer;
+        char *addr_str = colon + strlen(":"); // 注意中文字符的字节长度
+        addr_str[10] = '\0';
+        // 去除操作类型前后的空格
+        // trim(op);
+        // trim(addr_str);
+        // 转换地址
+        uint32_t addr = string_to_uint(&addr_str[2]);
+        // uint32_t pc = string_to_uint(&buffer[2]);
+        cache_func(cache_con, addr);
       }
       cache_con->log->hit_percent = (float)cache_con->log->hit_time / cache_con->log->total_time * 100;
       printf("%d\t%ld\t%ld\t%ld\t\t%ldB\t\t%s\t\t%f%%\n", index++, cache_con->config->cache_set, cache_con->config->cache_way, cache_con->config->cache_line, cache_con->config->cache_line*cache_con->config->cache_way*cache_con->config->cache_set, get_algorithm_name(cache_con->config->arithem_idx), cache_con->log->hit_percent);

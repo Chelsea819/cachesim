@@ -42,6 +42,8 @@ typedef struct cache_way{
 
 typedef struct cache_set{
   Cache_way* cache_ways;
+  uint32_t * lru_array_2;
+  uint32_t ** lru_array_4;
 }Cache_set;
 
 typedef struct cache_area{

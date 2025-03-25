@@ -4,8 +4,8 @@
 // 头文件内容
 #include "common.h"
 // like-lru
-uint32_t like_lru_arithem(uint32_t addr_set, uint32_t way_num);
-void like_lru_arithem_update(uint32_t set_addr, uint32_t way_addr, uint32_t way_num);
+uint32_t like_lru_arithem(Cache * cache, uint32_t addr_set, uint32_t way_num);
+void like_lru_arithem_update(Cache * cache, uint32_t set_addr, uint32_t way_addr, uint32_t way_num);
 void cache_tag_like_lru_arithem_init(Cache * cache);
 
 // lru
