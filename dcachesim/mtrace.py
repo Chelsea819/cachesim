@@ -19,4 +19,4 @@ for line in sys.stdin:
     if match := pattern.search(cleaned):
         op_map = {'read': 'read', 'write': 'write', 'ead': 'read'}  # 处理大小写变体
         op_type = op_map[match.group(1).lower()]
-        print(f"{op_type}:{match.group(2)}")
+        print(f"{match.group(2)}")
